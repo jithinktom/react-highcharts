@@ -17,3 +17,7 @@ Find UI library
 Request sent
 Request successful - 1. invalid session 2. valid session
 Request failed
+
+### Things to do
+Fetch data from historian in componentDidMount, Add it to state
+In chartload function, call Prem's API, keep on appending data to array, remove one from beginning

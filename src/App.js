@@ -10,7 +10,6 @@ import { validateSession } from './store/actions/userActions';
 class App extends React.Component {
 
   componentDidMount() {
-    console.log(this.props.validateSession)
     this.props.validateSession();
   }
 

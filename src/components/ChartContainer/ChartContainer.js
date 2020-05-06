@@ -11,25 +11,11 @@ class ChartContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            xAxis: {
-                type: 'datetime',
-                dateTimeLabelFormats: {
-                    second: '%e of %b'
-                }
-            },
-            series: [
-                {
-                    name: "AIG01.CurrentValue",
-                    type: "spline",
-                    lineColor: '#ff1e00',
-                    color: '#f2dcfa',
-                    data: []
-                }
-            ]
         }
     }
 
     socketConnect = () => {
+        console.log("called socket connet")
         this.client = new Client();
         this.client.configure({
             brokerURL: 'ws://stlbiopdv02x145:8080/stomp',
@@ -37,33 +23,84 @@ class ChartContainer extends React.Component {
                 console.log('onConnect');
                 this.client.subscribe('/queue/schedule', message => {
                     var messageData = JSON.parse(message.body)[0];
-                    console.log(messageData)
-                    var newState = clone(this.state);
-                    newState.series[0].data.push(parseFloat(messageData.y))
-                    if (newState.series[0].data.length > 50)
-                        newState.series[0].data.shift()
-                    this.setState(newState)
-                });
-                this.client.subscribe('/topic/greetings', message => {
-                    console.log("Message received from greetings: ", JSON.parse(message.body))
+                    // console.log(messageData)
+                    this.appendRealTimeData(messageData)
                 });
             }
         });
         this.client.activate();
     }
 
+    appendRealTimeData = (messageData) => {
+        var newState = clone(this.state);
+        if (!newState[messageData.name]) {
+            this.setState({
+                [messageData.name]: {
+                    name: messageData.name,
+                    data: [[Date.now(), parseFloat(messageData.y)]],
+                    x: {
+                        title: "",
+                        type: 'datetime'
+                    }
+                }
+            })
+        }
+        else {
+            newState[messageData.name].data.push([Date.now(), parseFloat(messageData.y)])
+            if (newState[messageData.name].data.length > 50)
+                newState[messageData.name].data.shift()
+            this.setState(newState)
+        }
+
+    }
+
     componentDidMount() {
-        // this.props.fetchInitialData();
+        this.props.fetchInitialData();
         this.socketConnect();
     }
 
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     let speedData = prevState.series[0];
-    //     speedData.data = nextProps.data.data;
-    //     return {
-    //         series: [speedData]
-    //     }
-    // }
+    mapStateToOptions = () => {
+        // console.log(this.state)
+        var keys = Object.keys(this.state)
+        // console.log(keys)
+        let options = {
+            series: []
+        }
+        if (keys.length > 0)
+            for (let i = 0; i < keys.length; i++) {
+                options.series.push({
+                    name: keys[i],
+                    type: "spline",
+                    lineColor: '#ff1e00',
+                    color: '#f2dcfa',
+                    data: this.state[keys[i]].data
+                })
+            }
+        return options;
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.data.length > 0)
+            return {
+                [nextProps.data[0].FQN]: {
+                    name: nextProps.data[0].FQN,
+                    type: "spline",
+                    lineColor: '#ff1e00',
+                    color: '#f2dcfa',
+                    data: nextProps.data.map(val => {
+                        return [val.DateTime, val.Value]
+                    }),
+                    x: {
+                        title: nextProps.data[0].FQN,
+                        type: 'datetime'
+                    },
+                    y: {
+                        title: ""
+                    }
+                }
+            }
+        return null
+    }
 
     render() {
         return (
@@ -71,7 +108,7 @@ class ChartContainer extends React.Component {
                 <HighchartsReact
                     highcharts={Highcharts}
                     constructorType={'stockChart'}
-                    options={this.state} />
+                    options={this.mapStateToOptions()} />
             </div>
         );
     }
