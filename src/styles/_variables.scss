@@ -1,0 +1,51 @@
+//All global variables define here
+
+/********************
+**** Base colors ****
+*********************/
+
+$richPurple: #502f93;
+$sensitiveBlue: #97d5d2;
+$black: #212121;
+$darkGray: #adb5bd;
+$search: #f1eff7;
+$lightGray: #f8f8f8;
+$mediumGray: #e9ecef;
+$selectedBlue: #4e92e3;
+$supportingSelectedBlue: #f1f8ff;
+$warning: #f5a623;
+$supportingWarning: #fffbec;
+$error: #ed1a3b;
+$supportingError: #fef2f4;
+$phaseRowHead: #4a4a4a;
+$grayColor: #e9e9ed;
+$boxShadowColor: #d5d5d8;
+$active: #2dbecd;
+$menuColor: #4a4a4a;
+$btnColor: #503291;
+$borderColor: #e9ecef;
+$inputBackgroundColor: #f8f8fc;
+$placeHolderColor: #9b9b9b;
+$borderColor: #e9ecef;
+
+/***********************
+**** old variables *****
+************************/
+
+$primaryColor: #fff;
+$secondaryColor: #626262;
+$lightgray: #e3e3e3;
+$darkgrey: #8c8c8c;
+$border-color: #cfcfcf;
+
+/***********************
+**** Typography ****
+************************/
+
+$font: "Lato";
+$font-size: 1em;
+
+/*****************************************************
+***** Error border**************
+******************************************************/
+$error-border: 1px solid $error !important;

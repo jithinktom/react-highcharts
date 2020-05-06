@@ -1,0 +1,48 @@
+/****************************************
+****** import Variables and mixin *******
+*****************************************/
+
+@import "./styles/variables";
+@import "./styles/mixins";
+
+html {
+  font-size: 14px;
+}
+
+html,
+*,
+*:after,
+*:before {
+  @include no-space;
+  @include box-sizing(border-box);
+}
+
+body,
+button {
+  font-family: "verdana", Arial, sans-serif;
+  color: $black;
+  -webkit-user-select: none;
+  /* Safari 3.1+ */
+  -moz-user-select: none;
+  /* Firefox 2+ */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+  /* Standard syntax */
+}
+
+// button {
+//   background: $primaryColor;
+//   border: 1px solid darken($borderColor, 20%);
+//   font-size: 1.2em;
+//   outline: none;
+//   cursor: pointer;
+//   padding: 8px;
+//   font-family: "Lato";
+//   @include border-radius(3px, 3px, 3px, 3px);
+// }
+
+body {
+  overflow: hidden;
+  background-color: $grayColor !important;
+}

@@ -1,0 +1,46 @@
+/*********************************
+********** border box ************
+**********************************/
+
+@mixin box-sizing($box-model) {
+    -webkit-box-sizing: $box-model;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: $box-model;
+    /* Firefox */
+    box-sizing: $box-model;
+    /* Opera/IE 8+ */
+}
+
+/****************************************
+  ********** no margin no padding *********
+  *****************************************/
+
+@mixin no-space() {
+    margin: 0;
+    padding: 0;
+}
+
+/****************************************
+  ********** border radius ****************
+  *****************************************/
+
+@mixin border-radius($top, $right, $bottom, $left) {
+    -webkit-border-radius: $top $right $bottom $left;
+    -moz-border-radius: $top $right $bottom $left;
+    border-radius: $top $right $bottom $left;
+}
+
+/****************************************
+    ********** Primary button ****************
+    *****************************************/
+@mixin primaryButton {
+    font-size: 1.1rem;
+    @include border-radius(0.6rem, 0.6rem, 0.6rem, 0.6rem);
+    padding: 1rem 1.5rem;
+    border-style: none;
+    background-color: $btnColor !important;
+    color: $lightGray;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-color: transparent;
+}

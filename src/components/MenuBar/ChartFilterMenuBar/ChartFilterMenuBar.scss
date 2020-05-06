@@ -1,0 +1,29 @@
+@import '../../../styles/variables';
+
+.chart-filter-menubar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid $borderColor;
+    .menu-section {
+        display: flex;
+        .menu-item {
+            margin-right: 15px;
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+    .fav-icon {
+        font-size: 1.4em;
+        color: $active;
+        line-height: .5;
+    }
+    .ant-select-selection-placeholder {
+        opacity: 1;
+    }
+}
+.filter-dropdown {
+    width: auto!important;
+    padding: 15px!important;
+}
