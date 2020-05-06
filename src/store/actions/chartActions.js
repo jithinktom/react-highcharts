@@ -31,7 +31,7 @@ export const addFilterData = (data, section) => ({
 
 export const fetchInitialData = () => dispatch => {
     return setTimeout(() => {
-        dispatch({ type: CHART.FETCH_INITIAL_DATA_FULFILLED, payload: historianData.value, error: { status: false } });
+        dispatch({ type: CHART.FETCH_INITIAL_DATA_FULFILLED, payload: historianData, error: { status: false } });
     })
 }
 

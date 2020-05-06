@@ -3,6 +3,7 @@
 *********************/
 
 import { CHART } from "../../utils/constants/actionConstants"
+import moment from 'moment';
 
 export default (state = {}, action) => {
     switch (action.type) {
@@ -17,10 +18,16 @@ export default (state = {}, action) => {
             }
         }
         case CHART.FETCH_INITIAL_DATA_FULFILLED: {
-            console.log("called in chartReducer")
+            var initialData = {};
+            // console.log(moment(action.payload.value[0].DateTime, moment.ISO_8601).valueOf())
+            initialData.data = action.payload.value.map(data => {
+                let time = new Date(data.DateTime)
+                return [time.getTime(), data.Value]
+            })
+            initialData.name = action.payload.value[0].FQN
             return {
                 ...state,
-                initialData : action.payload
+                initialData: initialData
             }
         }
         default:

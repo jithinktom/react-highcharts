@@ -1,16 +1,15 @@
 import React from "react";
-import { render } from "react-dom";
-// Import Highcharts
 import Highcharts from "highcharts/highstock";
-//import HighchartsReact from "./HighchartsReact.min.js";
 import HighchartsReact from "highcharts-react-official";
+import { Client } from '@stomp/stompjs';
 
 import HC_more from "highcharts/highcharts-more"; //module
 HC_more(Highcharts); //init module
 
-class App extends React.Component {
+class Chart extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props.chartData)
 
         this.state = {
             options: {
@@ -20,11 +19,27 @@ class App extends React.Component {
 
                             // set up the updating of the chart each second
                             var series = this.series[0];
+
                             setInterval(function () {
                                 var x = (new Date()).getTime(), // current time
                                     y = Math.round(Math.random() * 100);
                                 series.addPoint([x, y], true, true);
                             }, 1000);
+
+                            // this.client = new Client();
+                            // this.client.configure({
+                            //     brokerURL: 'ws://stlbiopdv02x145:8080/stomp',
+                            //     onConnect: () => {
+                            //         console.log('onConnect');
+                            //         this.client.subscribe('/queue/schedule', message => {
+                            //             var messageData = JSON.parse(message.body)[0];
+                            //             series.addPoint([x, y], true, true);
+                            //         });
+                            //     }
+                            // });
+                            // this.client.activate();
+
+
                         }
                     }
                 },
@@ -51,29 +66,19 @@ class App extends React.Component {
                 },
 
                 title: {
-                    text: 'Live random data'
+                    text: props.chartData.name
                 },
 
                 exporting: {
-                    enabled: false
+                    enabled: true
                 },
 
                 series: [{
-                    name: 'Random data',
-                    data: (function () {
-                        // generate an array of random data
-                        var data = [],
-                            time = (new Date()).getTime(),
-                            i;
-
-                        for (i = -999; i <= 0; i += 1) {
-                            data.push([
-                                time + i * 1000,
-                                Math.round(Math.random() * 100)
-                            ]);
-                        }
-                        return data;
-                    }())
+                    name: props.chartData.name,
+                    data: props.chartData.data,
+                    type: "spline",
+                    lineColor: '#ff1e00',
+                    color: '#f2dcfa'
                 }]
             }
         };
@@ -91,4 +96,4 @@ class App extends React.Component {
     }
 }
 
-render(<App />, document.getElementById("root"));
+export default Chart;
