@@ -11,7 +11,7 @@
     "agentkeepalive": "^4.1.2",
     "antd": "^4.2.0",
     "async": "^3.2.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "base-64": "^0.1.0",
     "clone": "^2.1.2",
     "highcharts": "^8.0.4",
